@@ -1,0 +1,24 @@
+import remiseria.*
+
+describe "remiseria" {
+	
+	const cachito = new ChevroletCorsa(color = "rojo")
+	const mario = new ChevroletCorsa(color = "negro")
+	const juan = new ChevroletCorsa(color = "verde")
+	const luis = new Classic(color = "beige")
+	const auto5 = new Classic(color = "azul")
+	const auto6 = new ChevroletCorsa()
+	const auto7 = new ChevroletCorsa()
+	const auto8 = new ChevroletCorsa()
+	const auto9 = new Classic()
+	const remiseria1 = new Remiseria(flotaDeVehiculos = #{cachito, mario, juan, luis, auto5})
+	const remiseria2 = new Remiseria(flotaDeVehiculos = #{cachito, auto6, auto7, auto8, auto9})
+	
+	test "test" {
+		assert.equals(6500, remiseria1.pesoTotalFlota())
+	}
+	
+	test "test1" {
+		assert.that(remiseria1.esRecomendable())	
+	}
+}
