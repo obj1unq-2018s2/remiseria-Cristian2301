@@ -5,20 +5,32 @@ describe "remiseria" {
 	const cachito = new ChevroletCorsa(color = "rojo")
 	const mario = new ChevroletCorsa(color = "negro")
 	const juan = new ChevroletCorsa(color = "verde")
-	const luis = new Classic(color = "beige")
-	const auto5 = new Classic(color = "azul")
-	const auto6 = new ChevroletCorsa()
-	const auto7 = new ChevroletCorsa()
-	const auto8 = new ChevroletCorsa()
-	const auto9 = new Classic()
+	const luis = new AutoStandardAGas(tieneTanqueAd = true)
+	const auto5 = new AutoDistinto (capacidad = 5, velocidadMaxima = 160, peso = 1200, color = "beige")
+	const auto6 = new AutoStandardAGas(tieneTanqueAd = true)
+	const auto7 = new AutoStandardAGas()
+	const auto8 = new AutoStandardAGas()
+	const auto9 = new Trafic(interior = interiorComodo, motor = motorBataton)
 	const remiseria1 = new Remiseria(flotaDeVehiculos = #{cachito, mario, juan, luis, auto5})
 	const remiseria2 = new Remiseria(flotaDeVehiculos = #{cachito, auto6, auto7, auto8, auto9})
 	
-	test "test" {
-		assert.equals(6500, remiseria1.pesoTotalFlota())
+	test "peso de flota de autos de remiseria" {
+		assert.equals(6450, remiseria1.pesoTotalFlota())
+		assert.equals(10250, remiseria2.pesoTotalFlota())
 	}
 	
-	test "test1" {
-		assert.that(remiseria1.esRecomendable())	
+	test "remiseria recomendable" {
+		assert.that(remiseria1.esRecomendable())
+		assert.notThat(remiseria2.esRecomendable())	
+	}
+	
+	test "capacidad total yendo a 140"{
+		assert.equals(17, remiseria1.capacidadTotalYendoA(140))
+		assert.equals(4, remiseria2.capacidadTotalYendoA(140))
+	}
+	
+	test "color auto mas rapido"{
+		assert.equals("beige", remiseria1.colorDelAutoMasRapido())
+		assert.equals("rojo", remiseria2.colorDelAutoMasRapido())
 	}
 }

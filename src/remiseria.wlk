@@ -69,25 +69,93 @@ class Remiseria {
 	}
 	
 	method cantPagoA(auto){
-		return 
+		return self.viajesQueHizo(auto).sum {viaje => viaje.costo()}
+	}
+	
+	method viajesQueHizo(auto){
+		return viajesHechos.filter {viaje => viaje.vehiculo() == auto}
 	}
 }
 
 
 class ChevroletCorsa  {
 	const property capacidad = 4
-	const property velocidadMaxima = 150
+	const velocidadMaxima = 150
 	const property peso = 1300
-	const property color 
+	var property color
+	
+	method velocidadMaxima(){
+		return velocidadMaxima
+	} 
 
 }
 
-class Classic inherits ChevroletCorsa {
+
+
+class AutoStandardAGas {
+	const tieneTanqueAd = false
+	const color = "gris"
 	
-	override method velocidadMaxima(){
-		return 200
+	method capacidad(){
+		return if(tieneTanqueAd) 3 else 4
 	}
 	
+	method velocidadMaxima(){
+		return if(tieneTanqueAd) 120 else 110
+	}
+	
+	method peso(){
+		return if(not tieneTanqueAd) 1200 else 1200 + 150
+	}
+	
+}
+
+
+class Trafic {
+	var interior
+	var motor
+	const color = "blanco"
+	
+	method capacidad(){
+		return interior.capacidad()
+	}
+	
+	method velocidadMaxima(){
+		return motor.velocidadMaxima()
+	}
+	
+	method peso(){
+		return 4000 + interior.peso() + motor.peso()
+	}
+}
+
+object interiorComodo {
+	const property capacidad = 5
+	const property peso = 700
+}
+
+object interiorPopular {
+	const property capacidad = 12
+	const property peso = 1000
+}
+
+object motorPulenta {
+	const property velocidadMaxima = 130
+	const property peso = 800
+}
+
+object motorBataton {
+	const property velocidadMaxima = 80
+	const property peso = 500
+}
+
+
+
+class AutoDistinto {
+	const property capacidad = 0
+	const property velocidadMaxima = 0
+	const property peso = 0
+	var property color
 }
 
 
@@ -96,7 +164,9 @@ class Viaje{
 	const tiempoMaximo = 0
 	const cantPasajeros = 0
 	const coloresIncompatibles = #{}
-	const property vehiculo
+	var property vehiculo
+	const valorPorKm = 0
+	const precioMinimo = 0
 	
 	method velocidadPromedio(){
 		return km / tiempoMaximo
@@ -118,7 +188,7 @@ class Viaje{
 	}
 	
 	method costo(){
-		return 
+		return if(valorPorKm * km < precioMinimo) precioMinimo else valorPorKm * km
 	}
 	
 }
